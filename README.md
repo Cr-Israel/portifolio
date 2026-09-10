@@ -1,124 +1,86 @@
-# Carlos Israel - Portfolio
+# Carlos Israel — Portfolio
 
-Portfólio profissional de Carlos Israel, Backend Developer especializado em Node.js, TypeScript e arquiteturas escaláveis.
+Portfólio de Carlos Israel, Backend Engineer especializado em Node.js, TypeScript e arquiteturas escaláveis.
 
-## 🚀 Sobre o Projeto
+Interface dark e cinematográfica: vídeo de fundo em loop, headline com gradiente animado, cards em "liquid glass" e um mockup interativo de workspace com os projetos.
 
-Este é um site de portfólio moderno e responsivo construído com HTML, CSS e JavaScript puro. O site apresenta minhas habilidades técnicas, projetos e informações de contato de forma elegante e interativa.
+## 🛠 Stack
 
-## ✨ Funcionalidades
+- **React 18** + **TypeScript**
+- **Vite 5** (build e dev server)
+- **Tailwind CSS 3** (`brand: #3D81E3`, fonte Inter)
+- **motion** v12 (`motion/react`) para as animações de entrada
+- **lucide-react** para os ícones
 
-- **Design Responsivo**: Adaptado para todos os tamanhos de tela (desktop, tablet, mobile)
-- **Tema Claro/Escuro**: Alternância de tema com preferência salva no localStorage
-- **Animações Suaves**: Transições fluidas e efeitos de scroll
-- **Navegação Interativa**: Menu de navegação com scroll suave entre seções
-- **Seções do Portfólio**:
-  - Hero com introdução e call-to-actions
-  - Sobre mim com soft skills
-  - Hard skills organizadas por categorias
-  - Galeria de projetos com links para GitHub
-  - Contato com links sociais
+## 🚦 Como rodar
 
-## 🛠️ Tecnologias Utilizadas
-
-- HTML5
-- CSS3 (Custom Properties, Grid, Flexbox, Animations)
-- JavaScript (Vanilla)
-- SVG para ícones sociais
-
-## 📋 Estrutura do Projeto
-
-```
-port/
-└── index.html    # Arquivo principal com HTML, CSS e JavaScript
-```
-
-## 🎨 Recursos de Design
-
-- **Sistema de Temas**: Variáveis CSS para fácil customização de cores
-- **Animações CSS**: Keyframes para fadeIn e animações flutuantes
-- **Efeitos Hover**: Interatividade em cards, botões e links
-- **Background Animado**: Círculos flutuantes na seção hero
-- **Tipografia Moderna**: System fonts para melhor performance
-
-## 🚦 Como Usar
-
-1. Clone o repositório:
 ```bash
-git clone https://github.com/Cr-Israel/port.git
+npm install
+npm run dev      # http://localhost:5173
 ```
 
-2. Navegue até o diretório:
+Outros scripts:
+
 ```bash
-cd port
+npm run build      # gera dist/
+npm run preview    # serve o build de produção
+npm run typecheck  # tsc --noEmit
 ```
 
-3. Abra o arquivo `index.html` em seu navegador preferido:
-```bash
-# Linux/WSL
-xdg-open index.html
+## 📁 Estrutura
 
-# macOS
-open index.html
-
-# Windows
-start index.html
+```
+├── index.html                 # shell do Vite
+├── public/
+│   ├── bg-aura.mp4            # vídeo de fundo (versão local otimizada, 1.9 MB)
+│   ├── hero-poster.jpg        # primeiro frame, exibido enquanto o vídeo carrega
+│   └── logo.svg               # favicon
+├── src/
+│   ├── App.tsx                # composição das seções + vídeo de fundo e filtro de ruído
+│   ├── index.css              # Inter, utilitários .liquid-glass / .animate-shiny / .c3-*
+│   ├── data/portfolio.ts      # TODO o conteúdo (perfil, projetos, skills, princípios)
+│   └── components/
+│       ├── primitives.tsx     # LogoMark, AppleLogo, PillButton, SectionEyebrow, gradientStyle
+│       ├── Navbar.tsx
+│       ├── Hero.tsx
+│       ├── MenuBar.tsx        # barra estilo macOS
+│       ├── Workspace.tsx      # mockup interativo dos projetos
+│       ├── Architecture.tsx   # camadas DDD / Clean Architecture
+│       ├── StackCloud.tsx
+│       ├── Principles.tsx     # princípios de engenharia
+│       ├── Skills.tsx         # cards cinematográficos + toggle hard/soft skills
+│       ├── FinalCTA.tsx
+│       └── Footer.tsx
+└── legacy/                    # versão anterior em HTML/CSS/JS puro
 ```
 
-Ou simplesmente arraste o arquivo `index.html` para o navegador.
+## ✏️ Como editar o conteúdo
+
+Quase tudo vive em **`src/data/portfolio.ts`**: dados de contato, link do CV, projetos (com
+destaques técnicos e stack), tecnologias, princípios e as listas de hard/soft skills.
+Adicionar um projeto novo é acrescentar um objeto ao array `projects` — o mockup e a
+navegação se ajustam sozinhos.
+
+## 🎨 Detalhes de design
+
+- **Vídeo de fundo**: `public/bg-aura.mp4` com fallback para o CDN original em `App.tsx`.
+  Um véu `bg-[#0c0c0c]/80` garante contraste AA do texto sobre as partes claras do vídeo.
+- **`.liquid-glass`**: borda em gradiente feita com `mask-composite`, usada nos cards.
+- **`.animate-shiny`**: gradiente de 200% deslizando em 6s sobre o headline.
+- **`.c3-*`**: seção de skills com watermark gigante, cards de 44px de raio e carrossel
+  com scroll-snap abaixo de 1024px.
+- `prefers-reduced-motion` desativa as animações contínuas e as transições de hover.
 
 ## 🌐 Deploy
 
-Este projeto pode ser hospedado em qualquer serviço de hospedagem estática:
-
-- **GitHub Pages**: Faça push para um repositório e ative o GitHub Pages
-- **Netlify**: Arraste e solte o arquivo ou conecte o repositório
-- **Vercel**: Deploy automático através do GitHub
-- **Cloudflare Pages**: Conecte o repositório para deploy contínuo
-
-## 📱 Seções do Site
-
-### Home
-Apresentação inicial com nome, título profissional e call-to-actions.
-
-### Sobre
-Descrição profissional, experiência e soft skills como resolução de problemas, trabalho em equipe e aprendizado contínuo.
-
-### Skills
-Hard skills organizadas em categorias:
-- Linguagens & Runtime: JavaScript, TypeScript, Node.js, Python
-- Frameworks Backend: NestJS, Fastify, Pandas
-- Banco de Dados: PostgreSQL, MongoDB, Redis, Prisma ORM
-- Ferramentas & DevOps: Docker, AWS, Git, CI/CD, Swagger
-
-### Projetos
-Showcase de projetos principais:
-- **Shortener URL**: Serviço de encurtamento de URLs com Fastify e React
-- **CleanTalks Forum**: Plataforma de fórum com NestJS e DDD
-- **VUTTR**: API RESTful para gerenciamento de ferramentas
-
-### Contato
-Links para GitHub, LinkedIn e email para contato profissional.
-
-## 🎯 Customização
-
-Para personalizar o portfólio com suas próprias informações:
-
-1. Edite o conteúdo HTML em `index.html`
-2. Modifique as variáveis CSS em `:root` para alterar o esquema de cores
-3. Atualize os links dos projetos e redes sociais
-4. Adicione ou remova seções conforme necessário
-
-## 📄 Licença
-
-© 2026 Carlos Israel Mesquita Alvares. Todos os direitos reservados.
+Build estático — publique a pasta `dist/` em GitHub Pages, Netlify, Vercel ou Cloudflare Pages.
 
 ## 📧 Contato
 
 - **Email**: carlosisrael08@hotmail.com
 - **GitHub**: [Cr-Israel](https://github.com/Cr-Israel)
-- **LinkedIn**: [Carlos Israel](https://www.linkedin.com/in/carlos-israel-64460a227/)
+- **LinkedIn**: [Carlos Israel](https://www.linkedin.com/in/carlos-israel/)
 
 ---
 
-Desenvolvido com 💙 por Carlos Israel
+© 2026 Carlos Israel Mesquita Alvares.
