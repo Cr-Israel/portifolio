@@ -1,0 +1,22 @@
+# O site é uma SPA em Vite: o index.html da raiz é apenas o shell de
+# desenvolvimento e aponta para /src/main.tsx. Publicar a raiz entrega ao
+# navegador um TypeScript que ele não executa — resultado: tela branca.
+# O que vai para produção é sempre o resultado de `npm run build`, em dist/.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Os assets gerados pelo Vite têm hash no nome, então podem ser cacheados
+# para sempre; o index.html precisa ser sempre revalidado.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
