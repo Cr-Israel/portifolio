@@ -35,7 +35,6 @@ export default function Hero() {
         className="mt-10 flex flex-col items-center gap-3"
       >
         <PillButton href={profile.cv} />
-        <span className="text-xs text-white/40">PDF · atualizado para 2026</span>
       </motion.div>
     </section>
   )
