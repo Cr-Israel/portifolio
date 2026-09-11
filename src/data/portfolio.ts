@@ -39,6 +39,73 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'microservices',
+    name: 'Microservices',
+    subject: 'Microsserviços com RabbitMQ, Kong e Jaeger',
+    preview: 'Orders e Invoices se falam por eventos; tracing distribuído via OTLP...',
+    meta: 'RabbitMQ',
+    unread: true,
+    summary:
+      'Dois serviços em TypeScript (Orders e Invoices) que se comunicam de forma assíncrona via RabbitMQ, atrás de um Kong API Gateway declarativo, com tracing distribuído no Jaeger via OpenTelemetry e infra na AWS provisionada com Pulumi.',
+    problem:
+      'Quando um pedido é criado, a fatura precisa ser gerada sem que o serviço de pedidos dependa do de faturas estar no ar. O projeto resolve isso com mensageria: Orders publica um evento e segue; Invoices consome quando puder, e cada requisição pode ser rastreada de ponta a ponta.',
+    highlights: [
+      {
+        title: 'Comunicação assíncrona',
+        body: 'RabbitMQ desacopla os serviços; contratos de mensagem compartilhados em um pacote comum garantem o mesmo tipo dos dois lados.',
+      },
+      {
+        title: 'Kong API Gateway (DB-less)',
+        body: 'Ponto de entrada único com roteamento declarativo em YAML, sem banco de dados para o gateway.',
+      },
+      {
+        title: 'Observabilidade com OpenTelemetry',
+        body: 'Auto-instrumentação Node exporta spans via OTLP para o Jaeger; atributos como order.id acompanham a requisição.',
+      },
+    ],
+    paragraphs: [
+      'Cada serviço tem seu próprio Postgres com Drizzle ORM e migrações versionadas; nada é compartilhado além do contrato de mensagens. As rotas Fastify usam Zod como type provider, então o schema valida em runtime e tipa em compile time.',
+      'A pasta infra sobe cluster ECS, load balancer e o broker na AWS com Pulumi, e o build das imagens Docker faz parte do mesmo programa TypeScript.',
+    ],
+    stack: ['TypeScript', 'Fastify', 'RabbitMQ', 'Kong', 'OpenTelemetry', 'Jaeger', 'Drizzle', 'PostgreSQL', 'Pulumi', 'Docker'],
+    label: { name: 'Microsserviços', color: '#a78bfa' },
+    repo: 'https://github.com/Cr-Israel/microservices',
+    initial: 'M',
+  },
+  {
+    id: 'email-classifier',
+    name: 'Email Classifier',
+    subject: 'Triagem de e-mails com LLM',
+    preview: 'FastAPI + LangChain: classifica como produtivo/improdutivo e sugere resposta...',
+    meta: 'Python',
+    summary:
+      'API em FastAPI que recebe um e-mail (texto, .txt ou .pdf), pré-processa com NLTK e usa um LLM via LangChain para classificar como Produtivo ou Improdutivo, devolvendo junto uma sugestão de resposta.',
+    problem:
+      'Times com alto volume de e-mails gastam tempo só triando o que precisa de resposta. Mensagens operacionais ficam misturadas com agradecimentos e confirmações automáticas. O Email Classifier automatiza essa triagem e já entrega um rascunho de resposta compatível com a categoria.',
+    highlights: [
+      {
+        title: 'Pré-processamento antes da inferência',
+        body: 'Normalização, remoção de stop words em português e stemming com NLTK reduzem ruído antes do prompt chegar ao modelo.',
+      },
+      {
+        title: 'LangChain + Hugging Face',
+        body: 'Inferência via HuggingFaceEndpoint (Mixtral 8x7B Instruct), com o provedor isolado em um módulo trocável.',
+      },
+      {
+        title: 'Resposta condicionada à categoria',
+        body: 'A sugestão não é gerada livremente: o prompt amarra o tom e o tamanho da resposta à classificação decidida.',
+      },
+    ],
+    paragraphs: [
+      'O endpoint aceita texto puro ou upload multipart; PDFs passam pelo PyPDF2 e arquivos são validados por extensão antes de qualquer leitura.',
+      'O backend fica separado do front (deploy estático no Netlify), então trocar o modelo ou plugar outro cliente (extensão, integração com caixa de entrada) não exige reescrever a interface.',
+    ],
+    stack: ['Python', 'FastAPI', 'LangChain', 'Hugging Face', 'NLTK', 'PyPDF2', 'Uvicorn'],
+    label: { name: 'IA', color: '#10b981' },
+    repo: 'https://github.com/Cr-Israel/email-classifier-back',
+    initial: 'E',
+  },
+  {
     id: 'cleantalks',
     name: 'CleanTalks',
     subject: 'Fórum com DDD & Clean Architecture',
@@ -46,7 +113,7 @@ export const projects: Project[] = [
     meta: 'NestJS',
     unread: true,
     summary:
-      'Fórum modular com domínio isolado da infraestrutura, comunicação por eventos (Pub/Sub) e suíte de testes unitários em banco in-memory — sem tocar no Postgres.',
+      'Fórum modular com domínio isolado da infraestrutura, comunicação por eventos (Pub/Sub) e suíte de testes unitários em banco in-memory, sem tocar no Postgres.',
     problem:
       'Sistemas complexos costumam sofrer com código acoplado e difícil de testar. O CleanTalks resolve isso ao aplicar arquitetura de software de alto nível para garantir que a plataforma seja escalável e fácil de manter a longo prazo.',
     highlights: [
@@ -71,40 +138,6 @@ export const projects: Project[] = [
     label: { name: 'Arquitetura', color: '#00d2ff' },
     repo: 'https://github.com/Cr-Israel/CleanTalks',
     initial: 'C',
-  },
-  {
-    id: 'shortener',
-    name: 'Shortener URL',
-    subject: 'Encurtador de alta performance',
-    preview: 'Redirecionamentos com baixíssima latência via Fastify...',
-    meta: 'Fastify',
-    unread: true,
-    summary:
-      'Encurtador full stack: Fastify na borda para redirecionar com latência mínima, MongoDB via Prisma para persistência e Zod garantindo que nenhuma URL inválida entre.',
-    problem:
-      'Links longos dificultam o compartilhamento e a memorização. O Shortener-URL resolve isso oferecendo um serviço de encurtamento rápido e seguro, focado em alta performance e uma experiência de usuário fluida e minimalista.',
-    highlights: [
-      {
-        title: 'Fastify & Performance',
-        body: 'Backend otimizado para oferecer redirecionamentos com baixíssima latência.',
-      },
-      {
-        title: 'Prisma & MongoDB',
-        body: 'Persistência flexível e eficiente utilizando um dos bancos NoSQL mais populares do mercado.',
-      },
-      {
-        title: 'Zod Validation',
-        body: 'Tipagem e validação rigorosa de dados para garantir a integridade de cada URL gerada.',
-      },
-    ],
-    paragraphs: [
-      'O caminho de redirect é o mais curto possível: resolve o slug, responde 302 e sai da frente. Todo o resto — criação, listagem, métricas — fica fora dessa rota.',
-      'O front em React + Vite consome a mesma tipagem do backend, então o contrato quebra em tempo de compilação e não em produção.',
-    ],
-    stack: ['TypeScript', 'Fastify', 'Prisma', 'MongoDB', 'React', 'Vite', 'Tailwind CSS'],
-    label: { name: 'Full Stack', color: '#A4F4FD' },
-    repo: 'https://github.com/Cr-Israel/Shortener-URL',
-    initial: 'S',
   },
   {
     id: 'vuttr',
@@ -139,6 +172,40 @@ export const projects: Project[] = [
     repo: 'https://github.com/Cr-Israel/VUTTR',
     initial: 'V',
   },
+  {
+    id: 'gympass',
+    name: 'GymPass API',
+    subject: 'Check-in em academias por geolocalização',
+    preview: 'Raio de 100 m, RBAC por JWT e refresh token em cookie httpOnly...',
+    meta: 'Fastify',
+    unread: true,
+    summary:
+      'API de check-in estilo GymPass: valida distância até a academia, bloqueia dois check-ins no mesmo dia e restringe validação a administradores, tudo testado sem tocar no banco.',
+    problem:
+      'Um check-in só faz sentido se o usuário estiver de fato na academia. A GymPass API resolve isso com regras de negócio explícitas: raio máximo de 100 m, um check-in por dia, validação apenas por ADMIN e dentro de 20 minutos após a criação.',
+    highlights: [
+      {
+        title: 'SOLID & inversão de dependência',
+        body: 'Use cases recebem repositórios por construtor e dependem de interfaces; o Prisma é detalhe de infraestrutura.',
+      },
+      {
+        title: 'RBAC via middleware',
+        body: 'Cadastro de academia e validação de check-in exigem o papel ADMIN, verificado direto no JWT.',
+      },
+      {
+        title: 'Refresh token em cookie httpOnly',
+        body: 'Access token de vida curta em memória; o refresh fica em cookie, fora do alcance de JavaScript.',
+      },
+    ],
+    paragraphs: [
+      'A busca de academias próximas (até 10 km) roda em query geográfica no Postgres, e a checagem dos 100 m fica no domínio, coberta por testes unitários com repositórios in-memory.',
+      'Os E2E usam um ambiente Vitest customizado que cria um schema isolado no Postgres por execução e o derruba ao final, então as suítes rodam em paralelo sem interferência.',
+    ],
+    stack: ['Fastify', 'TypeScript', 'Prisma', 'PostgreSQL', 'JWT', 'Zod', 'Vitest', 'Docker'],
+    label: { name: 'API', color: '#f59e0b' },
+    repo: 'https://github.com/Cr-Israel/gympass-api',
+    initial: 'G',
+  },
 ]
 
 export const stackCloud = [
@@ -147,9 +214,13 @@ export const stackCloud = [
   'NestJS',
   'Fastify',
   'PostgreSQL',
-  'MongoDB',
   'Prisma',
+  'RabbitMQ',
   'Docker',
+  'AWS',
+  'Python',
+  'FastAPI',
+  'MongoDB',
 ]
 
 export const principles = [
@@ -172,7 +243,7 @@ export const principles = [
       'Validação na borda é o que separa um bug em produção de um 400 bem explicado. Zod na entrada, tipos derivados dela em todo o resto.',
     name: 'Type safety de ponta a ponta',
     role: 'Contratos que quebram em build, não em runtime',
-    company: 'Shortener-URL',
+    company: 'Microservices',
   },
 ]
 
@@ -186,7 +257,7 @@ export const hardSkills = [
   {
     tier: 'Frameworks & Dados',
     main: 'NestJS',
-    desc: 'Frameworks backend e persistência — do módulo bem separado até a query bem indexada.',
+    desc: 'Frameworks backend e persistência: do módulo bem separado até a query bem indexada.',
     items: ['NestJS', 'Fastify', 'Prisma ORM', 'PostgreSQL', 'MongoDB', 'Redis'],
   },
   {
@@ -201,7 +272,7 @@ export const softSkills = [
   {
     tier: 'Como eu penso',
     main: 'Análise',
-    desc: 'Entender o problema antes de escolher a ferramenta — a maior parte da complexidade é acidental.',
+    desc: 'Entender o problema antes de escolher a ferramenta, porque a maior parte da complexidade é acidental.',
     items: ['Resolução de Problemas', 'Pensamento Analítico', 'Atenção aos Detalhes', 'Aprendizado Contínuo'],
   },
   {

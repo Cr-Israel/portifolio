@@ -3,11 +3,11 @@ import { stackCloud } from '../data/portfolio'
 
 export default function StackCloud() {
   return (
-    <section className="max-w-6xl mx-auto px-6 py-16 md:py-20">
+    <section className="site-container py-16 md:py-20">
       <p className="text-center text-xs uppercase tracking-widest text-white/40">
         Tecnologias que uso no dia a dia
       </p>
-      <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6">
+      <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6">
         {stackCloud.map((name, i) => (
           <motion.span
             key={name}

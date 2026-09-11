@@ -5,7 +5,7 @@ import { profile } from '../data/portfolio'
 
 export default function FinalCTA() {
   return (
-    <section id="contato" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <section id="contato" className="site-container py-20 md:py-32">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -23,13 +23,15 @@ export default function FinalCTA() {
 
         <div className="relative">
           <h2 className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.02]">
-            Tem um backend
+            Backend que não
             <br />
-            para construir?
+            vira dívida técnica amanhã.
           </h2>
           <p className="mt-6 text-white/60 max-w-md mx-auto text-sm leading-[1.6]">
-            Estou aberto a novas oportunidades e colaborações. Se o seu time precisa de APIs bem modeladas e
-            código que continue fácil de mudar daqui a um ano, vamos conversar.
+            Construo APIs bem modeladas, com arquitetura pensada para evoluir e código que continua 
+            fazendo sentido conforme o produto cresce.
+            <br />
+            <strong>Tem um desafio de backend? Vamos conversar.</strong>
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <PillButton

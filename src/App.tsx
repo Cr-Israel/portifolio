@@ -34,10 +34,6 @@ export default function App() {
         <div className="absolute inset-0 bg-[#0c0c0c]/80" />
       </div>
 
-      {/* Guias verticais nas bordas do container de 36rem */}
-      <div className="hidden md:block pointer-events-none fixed inset-y-0 left-1/2 -translate-x-[calc(50%+36rem)] w-px bg-white/10 z-[5]" />
-      <div className="hidden md:block pointer-events-none fixed inset-y-0 left-1/2 translate-x-[calc(-50%+36rem)] w-px bg-white/10 z-[5]" />
-
       {/* Filtro de ruído usado pelo headline com gradiente */}
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
         <filter id="c3-noise">

@@ -3,7 +3,7 @@ import { principles } from '../data/portfolio'
 
 export default function Principles() {
   return (
-    <section id="sobre" className="max-w-6xl mx-auto px-6 py-20 md:py-28 border-t border-white/10">
+    <section id="sobre" className="site-container py-20 md:py-28 border-t border-white/10">
       <div className="grid md:grid-cols-3 gap-6">
         {principles.map((item, i) => (
           <motion.figure

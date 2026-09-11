@@ -11,7 +11,7 @@ const SOCIALS = [
 export default function Footer() {
   return (
     <footer className="border-t border-white/10">
-      <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="site-container py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
           <LogoMark className="w-5 h-5 text-white/70" />
           <p className="text-xs text-white/40">

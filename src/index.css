@@ -20,6 +20,53 @@
   html {
     scroll-behavior: smooth;
   }
+
+  :root {
+    /* Respiro lateral do container (fluido: ~24px no celular, até 64px no desktop). */
+    --site-pad: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  /* -------------------------------------------------------------
+     Barra de rolagem personalizada (página e listas internas)
+  ------------------------------------------------------------- */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0c0c0c;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00d2ff 0%, #0b2551 100%);
+    border-radius: 999px;
+    border: 3px solid #0c0c0c;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #a4f4fd 0%, #00d2ff 100%);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #0c0c0c;
+  }
+
+  /* Firefox não suporta ::-webkit-scrollbar; usa as propriedades padrão.
+     (Não aplicar no Chrome: scrollbar-color desativa as regras acima.) */
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #00d2ff #0c0c0c;
+    }
+  }
+}
+
+@layer components {
+  .site-container {
+    width: 100%;
+    padding-inline: var(--site-pad);
+  }
 }
 
 /* ---------------------------------------------------------------
@@ -87,7 +134,7 @@
 --------------------------------------------------------------- */
 .c3-pricing-section {
   position: relative;
-  padding: 40px 20px 80px;
+  padding: 40px var(--site-pad) 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,7 +144,7 @@
 .c3-watermark-container {
   position: relative;
   width: 100%;
-  max-width: 1100px;
+  max-width: 100%;
   text-align: center;
   margin-top: 40px;
   z-index: 2;
@@ -133,9 +180,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   width: 100%;
-  max-width: 1100px;
+  max-width: 100%;
   margin-top: 60px;
-  transform: translateX(20px);
   position: relative;
   z-index: 3;
 }
@@ -251,9 +297,8 @@
   justify-content: flex-end;
   gap: 12px;
   width: 100%;
-  max-width: 1100px;
+  max-width: 100%;
   margin-top: 32px;
-  padding-right: 20px;
 }
 
 .c3-toggle {
@@ -305,7 +350,6 @@
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    transform: none;
     width: 100vw;
     padding: 0 20px;
     gap: 16px;
@@ -323,7 +367,6 @@
 
   .c3-toggle-wrap {
     justify-content: center;
-    padding-right: 0;
   }
 }
 

@@ -4,7 +4,7 @@ import { architectureLayers, triageChips } from '../data/portfolio'
 
 export default function Architecture() {
   return (
-    <section id="arquitetura" className="max-w-6xl mx-auto px-6 py-20 md:py-28">
+    <section id="arquitetura" className="site-container py-20 md:py-28">
       <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -20,7 +20,7 @@ export default function Architecture() {
           </h2>
           <p className="mt-6 text-white/60 text-base leading-[1.6] max-w-md">
             Modelo o problema antes de escolher a ferramenta. As regras de negócio ficam isoladas em uma camada
-            que compila sozinha — banco, HTTP e filas entram depois, como detalhes que podem ser trocados sem
+            que compila sozinha; banco, HTTP e filas entram depois, como detalhes que podem ser trocados sem
             reescrever o que importa.
           </p>
           <div className="mt-8 flex flex-wrap gap-2">

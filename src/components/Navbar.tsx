@@ -5,7 +5,7 @@ import { navLinks, profile } from '../data/portfolio'
 
 export default function Navbar() {
   return (
-    <div className="max-w-6xl mx-auto px-6">
+    <div className="site-container">
       <motion.nav
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}

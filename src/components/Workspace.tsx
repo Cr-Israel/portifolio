@@ -5,6 +5,7 @@ import {
   Braces,
   Code2,
   ExternalLink,
+  FileCode2,
   FolderGit2,
   Github,
   Layers,
@@ -19,21 +20,23 @@ import {
 } from 'lucide-react'
 import { profile, projects } from '../data/portfolio'
 
+const countByStack = (tech: string) =>
+  String(projects.filter((p) => p.stack.includes(tech)).length)
+
 const NAV = [
   { icon: FolderGit2, label: 'Projetos', count: String(projects.length), active: true },
   { icon: Layers, label: 'Arquitetura', count: '4' },
   { icon: Server, label: 'Backend' },
-  { icon: Braces, label: 'TypeScript', count: '5' },
+  { icon: Braces, label: 'TypeScript', count: countByStack('TypeScript') },
+  { icon: FileCode2, label: 'Python', count: countByStack('Python') },
   { icon: Terminal, label: 'DevOps' },
   { icon: Archive, label: 'Arquivados' },
 ]
 
-const LABELS = [
-  { name: 'Arquitetura', color: '#00d2ff' },
-  { name: 'Full Stack', color: '#A4F4FD' },
-  { name: 'API', color: '#f59e0b' },
-  { name: 'Dados', color: '#10b981' },
-]
+// Uma entrada por label distinta, na ordem em que aparece nos projetos.
+const LABELS = projects
+  .map((p) => p.label)
+  .filter((label, i, all) => all.findIndex((l) => l.name === label.name) === i)
 
 const LINKS = [
   { icon: Github, label: 'github.com/' + profile.githubUser, href: profile.github },
@@ -46,7 +49,7 @@ export default function Workspace() {
   const active = projects.find((p) => p.id === activeId)!
 
   return (
-    <section id="projetos" className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+    <section id="projetos" className="site-container py-16 md:py-24">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
